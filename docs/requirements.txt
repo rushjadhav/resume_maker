@@ -1,0 +1,5 @@
+django-phonenumber-field
+django-bootstrap3-datepicker
+django-formset-js-0.5.0
+django-jquery-js-2.1.4
+

@@ -1,0 +1,49 @@
+{% extends "dashboard_base.html" %}
+{% block content %}
+<div class="side-body">
+  <div class="page-title">
+    <span class="title">Publish Resume</span>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="card">
+        <ol class="breadcrumb">
+          <li><a href="{%url "dashboard:index" %}">Home</a></li>
+          <li class="active">{{resume.name}}</li>
+        </ol>
+        <div class="card-header">
+          <div class="card-title">
+              <div class="title">{{resume.name}}</div>
+          </div>
+        </div>
+        <div class="card-body">
+         {% include "includes/messages.html"%}
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+              <div class="form-group">
+                <label for="{{field.id}}">{{field.label}}</label>
+                {% if field.field.required %}
+                  <p class="required_asterik">*</p>
+                {% endif %}
+                {{field}}
+                {% if field.errors %}
+                  {% for error in field.errors %}
+                      <span class="alert alert-error form-control alert-danger">{{error}}</span>
+                  {% endfor %}
+                {% endif %}
+                </div>
+              {% endfor %}
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block bottomjs %}
+{{block.super}}
+{{form.media}}
+{% endblock %}
+

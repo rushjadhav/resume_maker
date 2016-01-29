@@ -1,0 +1,8 @@
+{% if messages %}                                     
+  <div class="control">
+    {% for message in messages %}                       
+	<p class="fresh-color fade in alert alert-{{message.tags}}">{{message}} </p>
+    {% endfor %}
+{% endif %}
+
+

@@ -1,0 +1,156 @@
+{% extends "dashboard_base.html" %}
+{% load formset_tags %}
+{% load class_tag %}
+{% block content %}
+<div class="side-body">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="card">
+        <ol class="breadcrumb">
+          <li><a href="{%url "dashboard:index" %}">Home</a></li>
+          <li class="active">{{resume.name}}</li>
+        </ol>
+        <div class="card-header">
+          <div class="card-title">
+            <div class="title">{{resume.name}}</div>
+          </div>
+        </div>
+        <div class="card-body ">
+          {% include "includes/messages.html"%}
+
+          <div class="progress">
+            <div style="width: {{resume.get_completed_percentage}}%" aria-valuemax="100" aria-valuemin="0"
+                   aria-valuenow="40" role="progressbar" class="progress-bar progress-bar-success progress-bar-striped">
+              {{resume.get_completed_percentage}}% Completed
+            </div>
+          </div>
+          <div class="step card-no-padding">
+            <ul role="tablist" class="nav nav-tabs">
+              {% for form in forms %}
+                {% if form|is_form_set %}
+                  <li {% ifequal form.0.name form_name %} class="active" {% endifequal %} role="step">
+                {% else%}
+                  <li {% ifequal form.name form_name  %} class="active" {% endifequal %} role="step">
+                {%endif %}
+                  {% if form|is_form_set %}
+                    <a aria-expanded="true" aria-controls="{{form.0.display_name}}" data-toggle="tab" role="tab" id="tab{{forloop.counter}}" href="#panel{{forloop.counter}}">
+                    <div class="icon {{form.0.icon_class}}"></div>
+                    <div class="step-title">
+                      <div class="title">{{form.0.display_name}}</div>
+                      <div class="title">{{form.0.description}}</div>
+                    </div>
+                  </a>
+                  {% else %}
+                    <a aria-expanded="true" aria-controls="{{form.display_name}}" data-toggle="tab" role="tab" id="tab{{forloop.counter}}" href="#panel{{forloop.counter}}">
+                      <div class="icon {{form.icon_class}}"></div>
+                      <div class="step-title">
+                        <div class="title">{{form.display_name}}</div>
+                        <div class="title">{{form.description}}</div>
+                      </div>
+                  </a>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+            <div class="tab-content">
+              {% for form in forms %}
+                {% if form|is_form_set %}
+                <div aria-labelledby="{{form.0.display_name}}-tab" id="panel{{forloop.counter}}" class="tab-pane fade {% ifequal form.0.name form_name  %}active {% endifequal %} in" role="tabpanel">
+                {% else %}
+                    <div aria-labelledby="{{form.display_name}}-tab" id="panel{{forloop.counter}}" class="tab-pane fade {% ifequal form.name form_name %}active {% endifequal %} in" role="tabpanel">
+                {% endif %}
+                  <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% if form|is_form_set %}
+                      <input type="hidden" name="form_name" value="{{form.0.name}}">
+                      <div id="formset-{{form.0.name}}" data-formset-prefix="{{ form.prefix }}">
+                        {{ form.management_form }}
+                        <div data-formset-body>
+                          {% for model_form in form %}
+                            {{model_form.media}}
+                            <div data-formset-form>
+                              {% for field in model_form %}
+                                <div class="form-group">
+                                  <label for="{{field.id}}">{{field.label}}</label>
+                                  {% if field.field.required %}
+                                    <p class="required_asterik">*</p>
+                                  {% endif %}
+                                  {{field}}
+                                  {% if field.errors %}
+                                    {% for error in field.errors %}
+                                       <span class="custom-error alert alert-error form-control alert-danger">{{error}}</span>
+                                    {% endfor %}
+                                  {% endif %}
+                                </div>
+                              {% endfor %}
+                              <div class="form-group">
+                                  <div class="hidden">{{ model_form.DELETE }}</div>
+                                  <button type="button" class="btn btn-danger pull-right" data-formset-delete-button>Delete</button>
+                              </div>
+                            </div>
+                          {% endfor %}
+                        </div>
+                        <script type="form-template" data-formset-empty-form>
+                          {% escapescript %}
+                            <div data-formset-form>
+                              {%for field in form.empty_form %}
+                                <div class="form-group">
+                                  <label for="{{field.id}}">{{field.label}}</label>
+                                  {% if field.field.required %}
+                                    <p class="required_asterik">*</p>
+                                  {% endif %}
+                                  {{field}}
+                                  {% if field.errors %}
+                                    {% for error in field.errors %}
+                                       <span class="custom-error alert alert-error form-control alert-danger">{{error}}</span>
+                                    {% endfor %}
+                                  {% endif %}
+                                </div>
+                              {% endfor %}
+                              <div class="form-group">
+                                  <button type="button" class="btn btn-danger pull-right" data-formset-delete-button>Delete</button>
+                              </div>
+
+                            </div>
+                          {% endescapescript %}
+                        </script>
+                        <div class="pull-right">
+                          <input type="button" class="btn btn-default" value="Add another" data-formset-add>
+                        </div>
+                        <script>jQuery(function($) {
+                        $("#formset-{{form.0.name}}").formset({
+                            animateForms: true
+                          });
+                        });</script>
+                      </div>
+                    {% else %}
+                        {{form.media}}
+                      <input type="hidden" name="form_name" value="{{form.name}}">
+                      {% for field in form %}
+                        <div class="form-group">
+                          <label for="{{field.id}}">{{field.label}}</label>
+                          {% if field.field.required %}
+                            <p class="required_asterik">*</p>
+                          {% endif %}
+                          {{field}}
+                          {% if field.errors %}
+                            {% for error in field.errors %}
+                              <span class="custom-error alert alert-error form-control alert-danger">{{error}}</span>
+                            {% endfor %}
+                          {% endif %}
+                        </div>
+                      {% endfor %}
+
+                    {% endif %}
+                      <button type="submit" class="btn btn-default">Submit</button>
+                  </form>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

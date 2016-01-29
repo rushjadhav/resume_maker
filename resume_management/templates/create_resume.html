@@ -1,0 +1,46 @@
+
+
+{% extends "dashboard_base.html" %}
+{% block content %}
+<div class="side-body">
+  <div class="row">
+    <div class="col-xs-12">
+      <ol class="breadcrumb">
+          <li><a href="{%url "dashboard:index" %}">Home ></a></li>
+      </ol>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="title">New Resume</div>
+          </div>
+        </div>
+        <div class="card-body">
+         {% include "includes/messages.html"%}
+          <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+              <div class="form-group">
+                 <label for="{{field.id}}">{{field.label}}</label>
+                 {% if field.field.required %}
+                   <p class="required_asterik">*</p>
+                 {% endif %}
+                 {{field}}
+                 {% if field.errors %}
+                   {% for error in field.errors %}
+                     <span class="alert alert-error form-control alert-danger">{{error}}</span>
+                   {% endfor %}
+                 {% endif %}
+                 </div>
+            {% endfor %}
+
+            <button class="btn btn-default" type="submit">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+

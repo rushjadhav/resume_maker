@@ -1,0 +1,98 @@
+{% extends "dashboard_base.html" %}
+{% block content %}
+{% load class_tag %}
+<div class="container-fluid">
+  <div class="side-body padding-top">
+    <div class="row  no-margin-bottom">
+      <div class="col-sm-12 col-xs-24">
+        <div class="page-title">
+          <span class="title">Your Resumes</span>
+          <p>
+            <a role="button" class="btn btn-primary" href="{% url "resume:create_resume"%}">
+            Create a new resume
+            </a>
+          </p>
+        </div>
+
+        <div>
+          {% include "includes/messages.html" %}
+          {% for resume in resumes %}
+            <div class="col-sm-6">
+              <div class="panel fresh-color panel-primary">
+                <div class="panel-heading">
+                    {{resume.name|truncatechars:10}}
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-2">
+                      <a href="{% url "resume:update_resume" resume.name %}">{{resume.name}}</a>
+                    </div>
+                    <div class="col-sm-3 badge">
+                      <span title="completed">{{resume.get_completed_percentage}}% completed</span>
+                    </div>
+                    <div class="col-sm-2">
+                      <a title="Select Template." class="icon glyphicon glyphicon-share col-sm-2"
+                         href="{% url "resume:publish_resume" resume.id %}">
+                      </a>
+                    </div>
+
+                    {% if not resume.is_published %}
+                      <div class="col-sm-2">
+                        <a href="" class="col-sm-2">Live Preview</a>
+                      </div>
+                    {% else %}
+                      <div class="col-sm-2">
+                        <a href="{% url "display_resume" resume.access_url %}" target="_">Live Preview</a>
+                      </div>
+                      <div class="col-sm-2 badge">
+                        <span title="Number of views">{{resume.number_of_views}} visits</span>
+                      </div>
+                      <div class="col-sm-2">
+                        <button title="Share" data-toggle="modal"
+                                class="fa fa-share-alt-square col-sm-2"
+                                data-target="#modal{{resume.id}}"></button>
+                      </div>
+                      <div class="col-sm-1">
+                        <a href="{% url "resume:prepare_pdf" resume.id %}" title="Download pdf" class="glyphicon glyphicon-download col-sm-2"></a>
+                      </div>
+
+        		      <!-- Modal -->
+  		        	  <div class="modal fade" id="modal{{resume.id}}" tabindex="-1" role="dialog"
+          			       aria-labelledby="myModalLabel" aria-hidden="true">
+        			    <div class="modal-dialog">
+				          <div class="modal-content">
+        				    <div class="modal-header">
+		          			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					            <span aria-hidden="true">&times;</span>
+					          </button>
+					          <h4 class="modal-title" id="myModalLabel">Share</h4>
+				            </div>
+				            <div class="modal-body">
+			                  <a href={% url "display_resume" resume.access_url%}>
+                                  {{request|get_absolute_uri:resume }}
+                              </a>
+        				    </div>
+				            <div class="modal-footer">
+					            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				            </div>
+				          </div>
+			            </div>
+			          </div>
+                    {% endif %}
+                </div>
+              </div>
+            </div>
+          {% empty %}
+          <div class="panel panel-danger">
+            <div class="panel-body alert-danger">
+              No resumes available.
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+

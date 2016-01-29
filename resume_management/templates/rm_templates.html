@@ -1,0 +1,42 @@
+{% extends "dashboard_base.html" %}
+
+{% block content %}
+<div class="side-body">
+  <div class="page-title">
+     <span class="title">Templates</span>
+     <div class="description">Select your template.</div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <div class="card-title">
+      <div class="title">Templates</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row no-margin">
+      {% for template in templates %}
+        <div class="col-sm-6 col-md-4">
+          <div class="thumbnail">
+              <img class="img-responsive" src="{{template.display_pic.url}}">
+            <div class="caption">
+              <h3 id="thumbnail-label">
+                  {{template.name}}
+                  <a href="#thumbnail-label" class="anchorjs-link">
+                    <span class="anchorjs-icon"></span>
+                  </a>
+              </h3>
+              <p>{{template.description}}</p>
+              <p>
+              <a role="button" class="btn btn-primary" href="{%url "resume:preview_template" template.id %}">Live Preview</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}
+

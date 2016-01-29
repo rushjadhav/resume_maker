@@ -1,0 +1,157 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Resume Maker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300,400' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{% static "website/css/bootstrap.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "website/css/font-awesome.min.css"%}">
+    <link rel="stylesheet" type="text/css" href="{% static "website/css/animate.min.css"%}">
+    <link rel="stylesheet" type="text/css" href="{% static "website/css/bootstrap-switch.min.css"%}">
+    <link rel="stylesheet" type="text/css" href="{% static "website/css/checkbox3.min.css"%}">
+    <link rel="stylesheet" type="text/css" href="{% static "website/css/jquery.dataTables.min.css"%}">
+    <link rel="stylesheet" type="text/css" href="{% static "website/css/dataTables.bootstrap.css"%}">
+    <link rel="stylesheet" type="text/css" href="{% static "website/css/select2.min.css"%}">
+    <link rel="stylesheet" type="text/css" href="{% static "website/css/style.css"%}">
+    <link rel="stylesheet" type="text/css" href="{% static "website/css/flat-blue.css"%}">
+  </head>
+  <body class="flat-blue landing-page">
+    <nav class="navbar navbar-inverse navbar-fixed-top  navbar-affix" role="navigation" data-spy="affix" data-offset-top="60">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">
+            <div class="icon fa fa-paper-plane"></div>
+            <div class="title">Resume Maker</div>
+          </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse " aria-expanded="true">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#feature">Features</a></li>
+            <li><a href="#about">About</a></li>
+            {% if request.user.is_authenticated %}
+                <li><a href="{% url "accounts:signout"%}">SignOut</a></li>
+            {% else %}
+                <li><a href="{% url "accounts:signin"%}">Signin/SignUp</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="jumbotron app-header">
+      <div class="container">
+        <h2 class="text-center">
+          <i class="app-logo fa fa-connectdevelop fa-5x color-white"></i>
+          <div class="color-white">Resume Maker</div>
+        </h2>
+        <p class="text-center color-white app-description">
+            Create beautiful, professional resumes in minutes and share with the world.
+        </p>
+        <p class="text-center">
+            <a class="btn btn-primary btn-lg app-btn" href="#" role="button">
+                Create Resume Now >>
+            </a>
+        </p>
+      </div>
+    </div>
+
+
+    <div class="container-fluid app-content-a" id="feature">
+      <div class="container">
+        <div class="row text-center">
+
+          <div class="col-md-3 col-sm-6">
+            <span class="fa-stack fa-lg fa-5x">
+            <i class="fa fa-circle-thin fa-stack-2x"></i>
+            <i class="fa fa-twitter fa-stack-1x"></i>
+            </span>
+            <h2>Exciting Templates</h2>
+            <p>
+                Our templates are really creative. They are also responsive. You can select any template.
+            </p>
+          </div>
+
+          <!-- /.col-lg-4 -->
+          <div class="col-md-3 col-sm-6">
+            <span class="fa-stack fa-lg fa-5x">
+            <i class="fa fa-circle-thin fa-stack-2x"></i>
+            <i class="fa fa-share-alt-square fa-stack-1x"></i>
+            </span>
+            <h2>Share With Anyone</h2>
+            <p>You can share your online resume with anyone at any time.</p>
+          </div>
+
+          <!-- /.col-lg-4 -->
+          <div class="col-md-3 col-sm-6">
+            <span class="fa-stack fa-lg fa-5x">
+            <i class="fa fa-circle-thin fa-stack-2x"></i>
+            <i class="fa fa-file-pdf-o fa-stack-1x"></i>
+            </span>
+            <h2>Download PDF</h2>
+            <p>
+                You can download pdf version of your resume any time.
+            </p>
+          </div>
+
+          <div class="col-md-3 col-sm-6">
+            <span class="fa-stack fa-lg fa-5x">
+            <i class="fa fa-circle-thin fa-stack-2x"></i>
+            <i class="fa fa-comments-o fa-stack-1x"></i>
+            </span>
+            <h2>Multiple Resumes</h2>
+            <p>
+                You can have any number of resumes without any restriction.
+            </p>
+          </div>
+          <!-- /.col-lg-4 -->
+        </div>
+      </div>
+    </div>
+
+
+    <div class="container-fluid app-content-b contact-us" id="about">
+      <div class="container">
+        <div class="row featurette">
+          <div class="col-md-6">
+            <h2 class="color-white contact-us-header">About Us</h2>
+            <p class="color-white contact-us-description">
+            Infosys is a global leader in consulting, technology, and outsourcing and next-generation services. We enable clients in more than 50 countries to outperform the competition and stay ahead of the innovation curve. With US$9.21 bn in LTM Q3 FY16 revenues and 193,000+ employees, we are helping enterprises renew themselves while also creating new avenues to generate value. We provide enterprises with strategic insights on what lies ahead. We help enterprises transform and thrive in a changing world through strategic consulting, operational leadership, and the co-creation of breakthrough solutions, including those in mobility, sustainability, big data, and cloud computing.
+            </p>
+          </div>
+          <div class="col-md-6">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /END THE FEATURETTES -->
+    <!-- FOOTER -->
+    <footer class="app-footer">
+      <div class="container">
+        <p class="text-muted">&copy; 2016, Rushikesh Jadhav.</p>
+      </div>
+    </footer>
+    <!-- Javascript Libs -->
+    <script type="text/javascript" src="{% static "website/js/jquery.min.js"%}"></script>
+    <script type="text/javascript" src="{% static "website/js/bootstrap.min.js"%}"></script>
+    <script type="text/javascript" src="{% static "webste/js/Chart.min.js"%}"></script>
+    <script type="text/javascript" src="{% static "website/js/bootstrap-switch.min.js"%}"></script>
+    <script type="text/javascript" src="{% static "website/js/jquery.matchHeight-min.js"%}"></script>
+    <script type="text/javascript" src="{% static "website/js/jquery.dataTables.min.js"%}"></script>
+    <script type="text/javascript" src="{% static "website/js/dataTables.bootstrap.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "website/js/select2.full.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "website/js/ace.js" %}"></script>
+    <script type="text/javascript" src="{% static "website/js/mode-html.js" %}"></script>
+    <script type="text/javascript" src="{% static "website/js/theme-github.js"%}"></script>
+    <!-- /.container -->
+  </body>
+</html>
+
+
