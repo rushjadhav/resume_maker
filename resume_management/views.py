@@ -265,7 +265,8 @@ class UpdateResumeView(View):
             try:
                 form_name = get_next_form(new_forms, form_name)
             except IndexError:
-                return HttpResponseRedirect(reverse('dashboard:index'))
+                return HttpResponseRedirect(reverse('resume:publish_resume',
+                                                     args=[resume.id]))
         return render(request, 'update_resume.html',
                       {'resume': resume, 'forms': new_forms,
                        'form_name': form_name})
