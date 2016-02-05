@@ -93,6 +93,19 @@ class PreviewTemplateView(View):
         except ResumeTemplate.DoesNotExist:
             raise Http404
 
+class LivePreviewView(View):
+
+    def get(self, request, template_id, resume_id):
+        try:
+            template = ResumeTemplate.objects.get(pk=template_id)
+            resume = Resume.objects.get(pk=resume_id)
+            return render(request,
+                          "resume_templates/%s.html" %(template.name),
+                          {'resume': resume, 'show_back': True})
+
+        except ResumeTemplate.DoesNotExist, Resume.DoesNotExist:
+            raise Http404
+
 class DisplayResume(View):
 
     def get(self, request, access_url):
@@ -101,7 +114,7 @@ class DisplayResume(View):
             resume = Resume.objects.get(access_url=access_url)
             resume.update_number_of_views(request.user)
             return render(request,
-                          "resume_templates/%s.html" %(resume.resume_template.name),
+                          "resume_templates/%s.html" %(resume.resume_template.code),
                           {'resume': resume})
         except Resume.DoesNotExist:
             raise Http404
@@ -265,8 +278,7 @@ class UpdateResumeView(View):
             try:
                 form_name = get_next_form(new_forms, form_name)
             except IndexError:
-                return HttpResponseRedirect(reverse('resume:publish_resume',
-                                                     args=[resume.id]))
+                return HttpResponseRedirect(reverse('resume:publish_resume', args=[resume.id]))
         return render(request, 'update_resume.html',
                       {'resume': resume, 'forms': new_forms,
                        'form_name': form_name})

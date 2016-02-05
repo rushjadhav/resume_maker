@@ -12,4 +12,4 @@ class PublishResumeForm(forms.Form):
                                                                'class':'form-control'}))
 
     resume_template = forms.ModelChoiceField(queryset=ResumeTemplate.objects.all(),
-                                             label=_('Template'), required=True)
+                                             label=_('Select Template'), required=True)

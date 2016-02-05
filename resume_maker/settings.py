@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'resume_management',
     'experience_management',
     'education_management',
+    'django_js_reverse',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -162,6 +163,7 @@ STATICFILES_FINDERS = (
 
 STATICFILES_DIRS = (
     ("bootstrap3_datepicker", os.path.join(BASE_DIR, 'static', 'bootstrap3_datepicker')),
+    ("django_js_reverse", os.path.join(BASE_DIR, 'static', 'django_js_reverse')),
     ("bootstrap3_datepicker", os.path.join(BASE_DIR, 'static', 'bootstrap3_datepicker', 'js')),
     ("bootstrap3_datepicker", os.path.join(BASE_DIR, 'static', 'bootstrap3_datepicker', 'css')),
     ("bootstrap3_datepicker", os.path.join(BASE_DIR, 'static', 'bootstrap3_datepicker', 'images')),

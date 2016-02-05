@@ -89,14 +89,12 @@ a:hover {
 	width:969px;
 	height:19px;
 	margin:0 auto;
-	background-image:url(../images/btop.jpg);
 	background-repeat:no-repeat;
 }
 
 .wrapper-mid {
 	width:969px;
 	margin:0 auto;
-	background-image:url(../images/bmid.jpg);
 	background-repeat: repeat-y;
 	padding-bottom:40px;
 }
@@ -106,7 +104,6 @@ a:hover {
 	height:22px;
 	padding:0;
 	margin:0 auto;
-	background-image:url(../images/bbottom.jpg);
 	background-repeat:no-repeat;
 }
 
@@ -121,9 +118,10 @@ a:hover {
 .paper-top {
 	width:828px;
 	margin:0 auto;
-	background-image:url(../images/ptop.jpg);
+	background-image:url(../images/pbottom.jpg);
 	background-repeat:no-repeat;
-	height:126px;
+	height:18px;
+    transform: rotate(180deg);
 }
 
 #paper-mid {

@@ -41,6 +41,10 @@ urlpatterns = patterns('',
 
                        url(r'^admin/',
                        include(admin.site.urls)),
+
+                       url(r'^jsreverse/$',
+                           'django_js_reverse.views.urls_js',
+                           name='js_reverse'),
 )
 
 if settings.DEBUG:

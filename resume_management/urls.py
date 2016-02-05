@@ -24,6 +24,10 @@ urlpatterns = [
             login_required(views.PreviewTemplateView.as_view()),
             name="preview_template"),
 
+        url(r'^live_preview/(?P<template_id>\d+)/(?P<resume_id>\d+)$',
+            login_required(views.LivePreviewView.as_view()),
+            name="live_preview"),
+
         url(r'^pdf/(?P<id>\d+)$',
             login_required(views.ResumePDFView.as_view()),
             name="prepare_pdf"),

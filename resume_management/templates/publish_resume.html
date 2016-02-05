@@ -27,6 +27,12 @@
                   <p class="required_asterik">*</p>
                 {% endif %}
                 {{field}}
+                {% ifequal field.name 'resume_template' %}
+                    <a  id="livePreview" data-toggle="modal" class="btn btn-success " href="#;"
+                        data-target="#myModal">Live Preview</a>
+
+                    <span class="alert alert-error" id="previewError">Please select the template first.</span>
+                {% endifequal %}
                 {% if field.errors %}
                   {% for error in field.errors %}
                       <span class="alert alert-error form-control alert-danger">{{error}}</span>
@@ -41,9 +47,36 @@
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    </div>
+  </div>
+</div>
+
 {% endblock %}
 {% block bottomjs %}
 {{block.super}}
 {{form.media}}
+<script type="text/javascript">
+    $( document ).ready(function() {
+        $('#previewError').hide()
+        $('#livePreview').click(function(ev){
+            templateId = $('#id_resume_template').val()
+            if(templateId){
+                $('#previewError').hide()
+                livePreviewUrl = Urls['resume:live_preview'](templateId, {{resume.id}})
+                console.log(livePreviewUrl);
+                $(this).attr('href', livePreviewUrl);
+                $(this).modal({show:true});
+            }
+            else{
+                $('#previewError').show()
+            }
+        });
+    });
+</script>
 {% endblock %}
 

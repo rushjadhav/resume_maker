@@ -25,43 +25,42 @@
     {% endblock %}
   </head>
   <body class="flat-blue">
-    <div class="app-container">
-    <div class="row content-container">
-      {% block topbar %}
-      {% include "includes/topbar.html" %}
+  <div class="app-container {%if request.session.is_expanded %}expanded {% endif %}">
+      <div class="row content-container">
+        {% block topbar %}
+        {% include "includes/topbar.html" %}
+        {% endblock %}
+        {% block sidebar %}
+        {% include "includes/sidebar.html" %}
+        {% endblock %}
+        {% block content %}
+        {% endblock %}
+      </div>
+      {% block footer %}
+        {% include "includes/footer.html" %}
       {% endblock %}
-      {% block sidebar %}
-      {% include "includes/sidebar.html" %}
-      {% endblock %}
-      {% block content %}
-      {% endblock %}
-    </div>
-    {% block footer %}
-    {% include "includes/footer.html" %}
-    {% endblock %}
     <div>
     {% block bottomjs %}
-    <script type="text/javascript" src="{% static "website/js/jquery.min.js"%}"></script>
-    <script type="text/javascript" src="{% static "website/js/bootstrap.min.js"%}"></script>
-    <script type="text/javascript" src="{% static "webste/js/Chart.min.js"%}"></script>
-    <script type="text/javascript" src="{% static "website/js/bootstrap-switch.min.js"%}"></script>
-    <script type="text/javascript" src="{% static "website/js/jquery.matchHeight-min.js"%}"></script>
-    <script type="text/javascript" src="{% static "website/js/jquery.dataTables.min.js"%}"></script>
-    <script type="text/javascript" src="{% static "website/js/dataTables.bootstrap.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "website/js/select2.full.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "website/js/ace.js" %}"></script>
-    <script type="text/javascript" src="{% static "website/js/mode-html.js" %}"></script>
-    <script type="text/javascript" src="{% static "website/js/theme-github.js"%}"></script>
-    <script type="text/javascript" src="{% static "website/js/app.js"%}"></script>
-    <script type="text/javascript" src="{% static "website/js/index.js"%}"></script>
-    <script type="text/javascript" src="{% static "bootstrap3_datepicker/js/bootstrap-datepicker.js"%}"></script>
-    <script type="text/javascript">
-      $( document ).ready(function() {
-        $('#profile_pic').change(function() {
-          $('#profile_pic_form').submit();
+      <script type="text/javascript" src="{% static "website/js/jquery.min.js"%}"></script>
+      <script type="text/javascript" src="{% static "website/js/bootstrap.min.js"%}"></script>
+      <script type="text/javascript" src="{% static "website/js/bootstrap-switch.min.js"%}"></script>
+      <script type="text/javascript" src="{% static "website/js/jquery.matchHeight-min.js"%}"></script>
+      <script type="text/javascript" src="{% static "website/js/jquery.dataTables.min.js"%}"></script>
+      <script type="text/javascript" src="{% static "website/js/dataTables.bootstrap.min.js" %}"></script>
+      <script type="text/javascript" src="{% static "website/js/select2.full.min.js" %}"></script>
+      <script type="text/javascript" src="{% static "website/js/ace.js" %}"></script>
+      <script type="text/javascript" src="{% static "website/js/mode-html.js" %}"></script>
+      <script type="text/javascript" src="{% static "website/js/theme-github.js"%}"></script>
+      <script type="text/javascript" src="{% static "website/js/app.js"%}"></script>
+      <script type="text/javascript" src="{% static "bootstrap3_datepicker/js/bootstrap-datepicker.js"%}"></script>
+      <script src="{% url 'js_reverse' %}" type="text/javascript"></script>
+      <script type="text/javascript">
+        $( document ).ready(function() {
+          $('#profile_pic').change(function() {
+            $('#profile_pic_form').submit();
+          });
         });
-      });
-    </script>
+      </script>
     {% endblock %}
   </body>
 </html>
